@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t absaj/docker-react-app -f Dockerfile.dev .
+  - docker run -d -p 3000:3000 --name my-app-container absaj/docker-react-app
+
+script:
+  - echo "Running tests inside the container..."
+  - docker exec my-app-container npm run test -- --coverage -- --watchAll=false
+#docker run container_image npm run test -- --coverage --watchAll=false
+# the -- --coverage flag makes sure that the npm run test gets properly executed inside the container 
+#and the --watchAll=false flag makes sure that the tests run only once and exit, without it the tests will keep running and 
+#watching for changes.
+
+after_install:
+  - docker start my-app-container
+
+uninstall:
+  - docker stop my-app-container
+  - docker rm my-app-container
+  - docker rmi absaj/docker-react-app  
