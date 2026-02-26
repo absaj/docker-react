@@ -21,3 +21,19 @@ uninstall:
   - docker stop my-app-container
   - docker rm my-app-container
   - docker rmi absaj/docker-react-app  
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: docker-react-app # must be same as the name of the application created in AWS Elastic Beanstalk
+  env: DockerReactApp-env # must be same as the name of the environment created in AWS Elastic Beanstalk
+  bucket_name: elasticbeanstalk-us-east-1-123456789012 # must be same as the name of the S3 bucket created in AWS 
+#Elastic Beanstalk, it is used to store the application versions and other files related to the application
+  bucket_path: docker-react-app # must be same as the name of the application created in AWS Elastic Beanstalk, 
+#it is used to store the application versions and other files related to the application
+#tell travis that it has to deploy to AWS only if there is a commit to master branch, otherwise it will deploy to 
+#AWS for every commit which is not desirable.
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
