@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Hi There Abhi! Bye Abhi:: ba ba ba This is a simple React app running inside a Docker container.
+          Hi changed this to commit to a feature branch.
         </p>
         <a
           className="App-link"
